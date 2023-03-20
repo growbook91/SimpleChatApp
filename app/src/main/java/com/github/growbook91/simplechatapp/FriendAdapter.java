@@ -34,21 +34,21 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.FriendView
     }
 
     static class FriendViewHolder extends RecyclerView.ViewHolder{
-        ImageView profileImage;
-        TextView profileName;
-        TextView profileStatus;
+        ImageView friendImage;
+        TextView friendName;
+        TextView friendStatus;
 
         public FriendViewHolder(@NonNull View itemView) {
             super(itemView);
-            profileName = itemView.findViewById(R.id.text_view_name);
-            profileStatus = itemView.findViewById(R.id.text_view_status);
-            profileImage = itemView.findViewById(R.id.image_view_profile_image);
+            friendName = itemView.findViewById(R.id.text_view_name);
+            friendStatus = itemView.findViewById(R.id.text_view_status);
+            friendImage = itemView.findViewById(R.id.image_view_profile_image);
         }
 
-        public void bind(Friend profile){
-            profileName.setText(profile.name);
-            profileStatus.setText(profile.status);
-            profileImage.setImageResource(profile.image);
+        public void bind(Friend friend){
+            friendName.setText(friend.name);
+            friendStatus.setText(friend.status);
+            friendImage.setImageResource(friend.image);
         }
     }
 }
