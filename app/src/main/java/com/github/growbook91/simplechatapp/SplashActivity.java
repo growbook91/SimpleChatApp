@@ -20,7 +20,7 @@ public class SplashActivity extends AppCompatActivity {
         Handler handler=new Handler();
         handler.postDelayed(new Runnable(){
             public void run(){
-                Intent intent=new Intent(getApplicationContext(),MainActivity.class);
+                Intent intent=new Intent(getApplicationContext(),SignInActivity.class);
                 startActivity(intent);
                 finish();
             }
