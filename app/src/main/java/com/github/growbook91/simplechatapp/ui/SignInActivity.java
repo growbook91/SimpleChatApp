@@ -1,11 +1,14 @@
 package com.github.growbook91.simplechatapp.ui;
 
-import static com.github.growbook91.simplechatapp.data.UserModel.account;
+import static com.github.growbook91.simplechatapp.data.UserModel.getAccount;
+import static com.github.growbook91.simplechatapp.data.UserModel.getUserId;
+import static com.github.growbook91.simplechatapp.data.UserModel.setAccount;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -36,7 +39,8 @@ public class SignInActivity extends AppCompatActivity {
         userModel = new UserModel(this);
 
         userModel.setGoogleSignInClient(this);
-        // Set the dimensions of the sign-in button.
+
+        // Set the sign-in button.
         setSignInButton();
 
     }
@@ -89,10 +93,12 @@ public class SignInActivity extends AppCompatActivity {
     }
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
-            account = completedTask.getResult(ApiException.class);
+            setAccount(completedTask.getResult(ApiException.class));
 
             // Signed in successfully, show authenticated UI.
-            updateUI(account);
+            updateUI(getAccount());
+//            Toast.makeText(this, getUserId(), Toast.LENGTH_SHORT).show();
+            userModel.firstLogIn();
         } catch (ApiException e) {
             // The ApiException status code indicates the detailed failure reason.
             // Please refer to the GoogleSignInStatusCodes class reference for more information.
