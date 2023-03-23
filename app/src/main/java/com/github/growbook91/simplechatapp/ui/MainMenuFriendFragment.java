@@ -1,4 +1,4 @@
-package com.github.growbook91.simplechatapp;
+package com.github.growbook91.simplechatapp.ui;
 
 import android.os.Bundle;
 
@@ -8,6 +8,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.github.growbook91.simplechatapp.Friend;
+import com.github.growbook91.simplechatapp.FriendAdapter;
+import com.github.growbook91.simplechatapp.R;
 
 public class MainMenuFriendFragment extends Fragment {
 

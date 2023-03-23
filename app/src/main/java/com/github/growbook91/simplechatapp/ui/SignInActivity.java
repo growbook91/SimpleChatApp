@@ -1,6 +1,6 @@
-package com.github.growbook91.simplechatapp;
+package com.github.growbook91.simplechatapp.ui;
 
-import static android.content.ContentValues.TAG;
+import static com.github.growbook91.simplechatapp.data.UserModel.account;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,9 +8,10 @@ import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.github.growbook91.simplechatapp.R;
+import com.github.growbook91.simplechatapp.data.UserModel;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -23,7 +24,7 @@ import com.google.android.gms.tasks.Task;
 public class SignInActivity extends AppCompatActivity {
 
 
-    private GoogleSignInClient mGoogleSignInClient;
+    private UserModel userModel;
     private static final String TAG = "SignInActivity";
     private static final int RC_SIGN_IN = 9001;
 
@@ -32,25 +33,25 @@ public class SignInActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
 
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail()
-                .build();
-        // Build a GoogleSignInClient with the options specified by gso.
-        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+        userModel = new UserModel(this);
 
+        userModel.setGoogleSignInClient(this);
         // Set the dimensions of the sign-in button.
-        SignInButton signInButton = findViewById(R.id.sign_in_button);
+        setSignInButton();
 
+    }
+
+    @NonNull
+    private void setSignInButton() {
+        SignInButton signInButton = findViewById(R.id.sign_in_button);
+        signInButton.setSize(SignInButton.SIZE_STANDARD);
+        signInButton.setColorScheme(SignInButton.COLOR_DARK);
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 signIn();
             }
         });
-
-        signInButton.setSize(SignInButton.SIZE_STANDARD);
-        signInButton.setColorScheme(SignInButton.COLOR_DARK);
-
     }
 
     @Override
@@ -58,8 +59,7 @@ public class SignInActivity extends AppCompatActivity {
         super.onStart();
         // Check for existing Google Sign In account, if the user is already signed in
         // the GoogleSignInAccount will be non-null.
-        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
-        updateUI(account);
+        updateUI(userModel.checkUserAccount());
     }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -73,21 +73,23 @@ public class SignInActivity extends AppCompatActivity {
             handleSignInResult(task);
         }
     }
-    private void signIn() {
-        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+
+    public void signIn() {
+        Intent signInIntent = userModel.getGoogleSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
-    private void updateUI(GoogleSignInAccount account) {
+
+    public void updateUI(GoogleSignInAccount account) {
         // If there exists logged in account,
         // Go to MainActivity
         if(account != null){
-            Intent intent=new Intent(getApplicationContext(),MainActivity.class);
+            Intent intent=new Intent(getApplicationContext(), MainActivity.class);
             startActivity(intent);
         }
     }
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
-            GoogleSignInAccount account = completedTask.getResult(ApiException.class);
+            account = completedTask.getResult(ApiException.class);
 
             // Signed in successfully, show authenticated UI.
             updateUI(account);
@@ -98,4 +100,6 @@ public class SignInActivity extends AppCompatActivity {
             updateUI(null);
         }
     }
+
+
 }

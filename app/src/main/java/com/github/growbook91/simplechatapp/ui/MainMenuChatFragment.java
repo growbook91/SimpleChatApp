@@ -1,4 +1,4 @@
-package com.github.growbook91.simplechatapp;
+package com.github.growbook91.simplechatapp.ui;
 
 import android.os.Bundle;
 
@@ -7,6 +7,8 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.github.growbook91.simplechatapp.R;
 
 
 public class MainMenuChatFragment extends Fragment {

@@ -1,10 +1,12 @@
-package com.github.growbook91.simplechatapp;
+package com.github.growbook91.simplechatapp.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+
+import com.github.growbook91.simplechatapp.R;
 
 public class SplashActivity extends AppCompatActivity {
 
