@@ -98,7 +98,7 @@ public class SignInActivity extends AppCompatActivity {
             // Signed in successfully, show authenticated UI.
             updateUI(getAccount());
 //            Toast.makeText(this, getUserId(), Toast.LENGTH_SHORT).show();
-            userModel.firstLogIn();
+            userModel.doesUserExist();
         } catch (ApiException e) {
             // The ApiException status code indicates the detailed failure reason.
             // Please refer to the GoogleSignInStatusCodes class reference for more information.

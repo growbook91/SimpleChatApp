@@ -12,6 +12,10 @@
         android:theme="@style/Theme.SimpleChatApp"
         tools:targetApi="31">
         <activity
+            android:name=".ui.SignUpActivity"
+            android:parentActivityName=".ui.SignInActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.SignInActivity"
             android:exported="false" />
         <activity
@@ -25,8 +29,8 @@
         </activity>
         <activity
             android:name=".ui.MainActivity"
-            android:parentActivityName=".ui.SignInActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".ui.SignInActivity" />
     </application>
 
 </manifest>

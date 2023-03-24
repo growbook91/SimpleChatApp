@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_centerHorizontal="true"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:fontFamily="sans-serif-light"
+        android:paddingStart="40dp"
+        android:text="Sign Up"
+        android:textColor="@color/white"
+        android:textSize="46sp" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="40dp"
+        android:layout_marginTop="60dp"
+        android:background="@color/selector_text_field"
+        android:hint="이름"
+        android:textColorHint="@color/white"
+        app:boxStrokeColor="#1E182E"
+        app:hintTextColor="@color/white"
+        app:startIconDrawable="@drawable/person_empty_24px"
+        app:startIconTint="@color/white">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/text_input_edit_text_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:paddingHorizontal="10dp"
+            android:textColor="@color/white" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="40dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/selector_text_field"
+        android:hint="번호"
+        android:textColorHint="@color/white"
+        app:boxStrokeColor="#1E182E"
+        app:hintTextColor="@color/white"
+        app:startIconDrawable="@drawable/phone_24px"
+        app:startIconTint="@color/white">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/text_input_edit_text_phone_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:paddingHorizontal="10dp"
+            android:textColor="@color/white" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="40dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/selector_text_field"
+        android:hint="상태 메세지"
+        android:textColorHint="@color/white"
+        app:boxStrokeColor="#1E182E"
+        app:hintTextColor="@color/white"
+        app:startIconDrawable="@drawable/info_24px"
+        app:startIconTint="@color/white">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/text_input_edit_text_status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:paddingHorizontal="10dp"
+            android:textColor="@color/white" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/sign_up_button"
+        style="@style/Widget.MaterialComponents.Button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="60dp"
+        android:layout_marginTop="60dp"
+        android:paddingHorizontal="80dp"
+        android:paddingVertical="20dp"
+        android:text="SIGN UP"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:backgroundTint="#0CF2E1"
+        app:shapeAppearance="@style/ShapeAppearance.MyApp.MediumComponent"
+
+        />
+</LinearLayout>
