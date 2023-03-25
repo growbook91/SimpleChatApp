@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.MutableLiveData;
 
 import com.github.growbook91.simplechatapp.ui.MainActivity;
 import com.github.growbook91.simplechatapp.ui.SignUpActivity;
@@ -18,6 +19,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -29,7 +31,12 @@ public class UserModel {
     private GoogleSignInClient mGoogleSignInClient;
     private Context activityContext;
     private static final String TAG = "UserModel";
-    private FirebaseFirestore db=FirebaseFirestore.getInstance();
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+    private static GoogleSignInAccount account;
+    public static MutableLiveData<String> name = new MutableLiveData<String>();
+    public static MutableLiveData<String> phoneNumber = new MutableLiveData<String>();
+    public static MutableLiveData<String> status = new MutableLiveData<String>();
 
     //getter and setter of account
     public static GoogleSignInAccount getAccount() {
@@ -40,21 +47,14 @@ public class UserModel {
         UserModel.account = account;
     }
 
-
-
-
-    private static GoogleSignInAccount account;
-
     //return UserId of account
     public static String getUserId() {
         return account.getId();
     }
 
-    public static String getUserName(){
-        return  account.getDisplayName();
+    public static String getUserName() {
+        return account.getDisplayName();
     }
-
-
 
 
     //class Constructor
@@ -81,38 +81,42 @@ public class UserModel {
     //check whether user has been signed in.
     public GoogleSignInAccount checkUserAccount() {
         account = GoogleSignIn.getLastSignedInAccount(activityContext);
-        if(account != null)
+        if (account != null)
             doesUserExist();
 
         return account;
     }
 
-    public void doesUserExist(){
+    public void doesUserExist() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         boolean userExist = false;
-        db.collection("users")
-                .whereEqualTo("uid", getUserId())
+        db.collection("user")
+                .document(getUserId())
                 .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d(TAG, document.getId() + " => " + document.getData());
-                            }
-                        }
-                        else {
-                            Log.w(TAG, "Create new user db", task.getException());
-                            //Add user doc
-                            //user info is needed.
-                            Intent intent = new Intent(activityContext, SignUpActivity.class);
-                            activityContext.startActivity(intent);
-                        }
+                    public void onSuccess(DocumentSnapshot document) {
+                        Log.d(TAG, document.getId() + " => " + document.getData());
+                        //TODO: load account information.
+                        name.setValue(document.getData().get("name").toString());
+                        status.setValue(document.getData().get("status").toString());
+                        phoneNumber.setValue(document.getData().get("phoneNumber").toString());
+                    }
+
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Create new user db", e);
+                        //Add user doc
+                        //user info is needed.
+                        Intent intent = new Intent(activityContext, SignUpActivity.class);
+                        activityContext.startActivity(intent);
                     }
                 });
     }
 
-    public void makeNewUser(String name, String phoneNumber, String status){
+    public void makeNewUser(String name, String phoneNumber, String status) {
         Map<String, Object> user = new HashMap<>();
         user.put("name", name);
         user.put("status", status);
